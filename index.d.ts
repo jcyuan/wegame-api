@@ -16,7 +16,7 @@ declare module wx {
         };
         
         type CallbacksWithType<T> = {
-            success?:(res?:T) => void,
+            success?:(res:T) => void,
             fail?:() => void,
             complete?:() => void
         };
@@ -209,9 +209,9 @@ declare module wx {
             fontSize?:number,
             fontFamily:string,
             text:string,
-            success:(res:{ lineHeight:number }) => void,
-            fail:() => void,
-            complete:() => void
+            success?:(res:{ lineHeight:number }) => void,
+            fail?:() => void,
+            complete?:() => void
         };
 
         interface Image {
@@ -431,8 +431,8 @@ declare module wx {
         };
         type SocketConnectParams = {
             url: string,
-            header: { [key:string]: string },
-            protocols: string[],
+            protocols?: string[],
+            header?: { [key:string]: string },
             method?:wx.types.RequestMethod,
             success?:() => void,
             fail?:() => void,
@@ -442,7 +442,7 @@ declare module wx {
             /**
              * 一个数字值表示关闭连接的状态号，表示连接被关闭的原因。如果这个参数没有被指定，默认的取值是1000 （表示正常连接关闭）
              */
-            code:number,
+            code?:number,
             /**
              * 一个可读的字符串，表示连接被关闭的原因。这个字符串必须是不长于123字节的UTF-8 文本（不是字符）
              */
@@ -566,15 +566,15 @@ declare module wx {
             /**
              * 转发标题，不传则默认使用当前小游戏的昵称。
              */
-            title:string,
+            title?:string,
             /**
              * 转发显示图片的链接，可以是网络图片路径或本地图片文件路径或相对代码包根目录的图片文件路径。显示图片长宽比是 5:4
              */
-            imageUrl:string,
+            imageUrl?:string,
             /**
              * 查询字符串，必须是 key1=val1&key2=val2 的格式。从这条转发消息进入后，可通过 wx.onLaunch() 或 wx.onShow 获取启动参数中的 query。
              */
-            query:string
+            query?:string
         }
 
         type AccelerometerParams = {
@@ -1748,6 +1748,10 @@ declare module wx {
          * wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标
          */
         type?:"wgs84" | "gcj02",
+        /**
+         * 传入 true 会返回高度信息，由于获取高度需要较高精确度，会减慢接口返回速度	>= 1.6.0
+         */
+        altitude?:boolean,
         success?:(res:{
             /**
              * 纬度，范围为 -90~90，负数表示南纬
@@ -1885,7 +1889,7 @@ declare module wx {
          * 显示用户信息的语言
          */
         lang?:"en" | "zh_CN" | "zh_TW",
-        success?:(res:{ data:wx.types.UserInfo }) => void,
+        success?:(res:{ data:wx.types.UserInfo[] }) => void,
         fail?:() => void,
         complete?:() => void
     }):void;
@@ -2042,6 +2046,7 @@ declare module wx {
     export function getSetting(p:wx.types.CallbacksWithType<{ authSetting:wx.types.AuthSetting }>):void;
     /**
      * 调起客户端小程序设置界面，返回用户设置的操作结果。设置界面只会出现小程序已经向用户请求过的权限。
+     * @deprecated
      */
     export function openSetting(p:wx.types.CallbacksWithType<{ authSetting:wx.types.AuthSetting }>):void;
 
@@ -2337,7 +2342,7 @@ declare module wx {
         /**
          * 提示的内容
          */
-        title:string,
+        title?:string,
         /**
          * 图标
          */
@@ -2365,7 +2370,7 @@ declare module wx {
         /**
          * 提示的标题
          */
-        title:string,
+        title?:string,
         /**
          * 提示的内容
          */
@@ -2401,7 +2406,7 @@ declare module wx {
         /**
          * 提示的内容
          */
-        title:string,
+        title?:string,
         /**
          * 是否显示透明蒙层
          */
@@ -2471,19 +2476,19 @@ declare module wx {
         /**
          * 键盘中文本的最大长度
          */
-        maxLength:number,
+        maxLength?:number,
         /**
          * 是否为多行输入
          */
-        multiple:boolean,
+        multiple?:boolean,
         /**
          * 当点击完成时键盘是否收起
          */
-        confirmHold:boolean,
+        confirmHold?:boolean,
         /**
          * 键盘右下角 confirm 按钮的类型，只影响按钮的文本内容
          */
-        confirmType:"done" | "next" | "search" | "go" | "send"
+        confirmType?:"done" | "next" | "search" | "go" | "send"
     }):void;
     /**
      * 更新键盘，只有当键盘处于拉起状态时才会产生效果
@@ -2569,13 +2574,13 @@ declare module wx {
      */
     export function previewImage(param:{
         /**
-         * urls 的第一张	否	当前显示图片的链接
-         */
-        current:string,
-        /**
          * 需要预览的图片链接列表
          */
         urls:string[],
+        /**
+         * 当前显示图片的链接，默认为urls的第一张
+         */
+        current?:string,
         success?:() => void,
         fail?:() => void,
         complete?:() => void
