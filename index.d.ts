@@ -1042,7 +1042,7 @@ declare namespace wx {
             complete?: () => void;
         }
 
-        type FileContentEncoding = "ascii" | "base64" | "binary" | "hex" | "ucs2/ucs-2/utf16le/utf-16le" | "utf-8/utf8" | "latin1";
+        type FileContentEncoding = "ascii" | "base64" | "binary" | "hex" | "ucs2" | "ucs-2" | "utf16le" | "utf-16le" | "utf-8" | "utf8" | "latin1";
 
         interface ReadfileParams {
             filePath: string;
@@ -1079,7 +1079,7 @@ declare namespace wx {
             zipFilePath: string;
             targetPath: string;
             success?: () => void;
-            fail?: () => void;
+            fail?: (e?:any) => void;
             complete?: () => void;
         }
 
@@ -1153,6 +1153,7 @@ declare namespace wx {
             width: number;
             height: number;
             onload: () => void;
+            onerror: (e?:any) => void;
         }
 
         // --启动参数
@@ -1317,11 +1318,11 @@ declare namespace wx {
 
         interface DownfileParams {
             url: string;
+            filePath: string;
             /**
              * 	HTTP 请求的 Header，Header 中不能设置 Referer
              */
-            header: { [key: string]: string };
-            filePath: string;
+            header?: { [key: string]: string };
             success?: (res: { tempFilePath: string, statusCode: number }) => void;
             fail?: () => void;
             complete?: () => void;
@@ -1355,7 +1356,7 @@ declare namespace wx {
             /**
              * res.data usually can be string or ArrayBuffer
              */
-            success?: (res: { data: any, statusCode: number, header: { [key: string]: string } }) => void;
+            success?: (res: { data: any, statusCode: number, header?: { [key: string]: string } }) => void;
             fail?: () => void;
             complete?: () => void;
         }
@@ -1389,7 +1390,7 @@ declare namespace wx {
             complete?: () => void;
         }
 
-        type SocketOpenCallback = (res: { header: { [key: string]: string } }) => void;
+        type SocketOpenCallback = (res: { header?: { [key: string]: string } }) => void;
         type SocketMessageCallback = (res: { data: string | ArrayBuffer }) => void;
         type SocketErrorCallback = (res: { errMsg: string }) => void;
 
@@ -1801,6 +1802,16 @@ declare namespace wx {
 
     // --文件系统
     function getFileSystemManager(): FileSystemManager;
+
+    /**
+     * 系统环境变量
+     */
+    const env: {
+        /**
+         * 用户下载数据根目录
+         */
+        USER_DATA_PATH: string
+    };
 
     // --位置
     /**
