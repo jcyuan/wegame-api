@@ -59,7 +59,7 @@ declare class Canvas {
      * @param contextType 上下文类型
      * @param contextAttributes webgl 上下文属性，仅当 contextType 为 webgl 时有效
      */
-    getContext(contextType: "2d" | "webgl", contextAttributes: wx.types.RenderingContextConfig): WxRenderingContext | WxWebGLRenderingContext;
+    getContext(contextType: "2d" | "webgl", contextAttributes?: wx.types.RenderingContextConfig): WxRenderingContext | WxWebGLRenderingContext;
     /**
      * 把画布上的绘制内容以一个 data URI 的格式返回
      */
@@ -404,7 +404,7 @@ declare class FeedbackButton extends CreatedButton {
 
 declare class OpenDataContext {
     /**
-     * 开放数据域和主域共享的 sharedCanvas
+     * 开放数据域和主域共享的 sharedCanvas，注意在开放数据域内时getContext只能使用2d模式
      */
     canvas: Canvas;
     /**
@@ -1567,7 +1567,7 @@ declare namespace wx {
              */
             imageUrl?: string;
             /**
-             * 查询字符串，必须是 key1=val1&key2=val2 的格式。从这条转发消息进入后，可通过 wx.onLaunch() 或 wx.onShow 获取启动参数中的 query。
+             * 查询字符串，必须是 key1=val1&key2=val2 的格式。从这条转发消息进入后，可通过 wx.getLaunchOptionsSync() 或 wx.onShow 获取启动参数中的 query。
              */
             query?: string;
         }
@@ -2219,15 +2219,15 @@ declare namespace wx {
     /**
      * 监听用户点击右上角菜单的“转发”按钮时触发的事件
      */
-    function onShareAppMessage(cb: (data: types.ShareOption) => void): void;
+    function onShareAppMessage(cb: () => types.ShareOption): void;
     /**
      * 取消监听用户点击右上角菜单的“转发”按钮时触发的事件
      */
-    function offShareAppMessage(cb: (data: types.ShareOption) => void): void;
+    function offShareAppMessage(cb: () => types.ShareOption): void;
     /**
      * 显示当前页面的转发按钮
      */
-    function showShareMenu(param: {
+    function showShareMenu(param?: {
         /**
          * 是否使用带 shareTicket 的转发
          */
