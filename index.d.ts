@@ -1,4 +1,4 @@
-// Type definitions for wegame 1.1
+// Type definitions for wegame 2.2
 // Project: https://developers.weixin.qq.com/minigame/dev/index.html
 // Definitions by: J.C <https://github.com/jcyuan>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
@@ -1079,7 +1079,7 @@ declare namespace wx {
             zipFilePath: string;
             targetPath: string;
             success?: () => void;
-            fail?: (e?:any) => void;
+            fail?: (e?: any) => void;
             complete?: () => void;
         }
 
@@ -1153,7 +1153,7 @@ declare namespace wx {
             width: number;
             height: number;
             onload: () => void;
-            onerror: (e?:any) => void;
+            onerror: (e?: any) => void;
         }
 
         // --启动参数
