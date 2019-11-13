@@ -15,7 +15,7 @@
 * GameRecorderShareButton
 
 ### 安装：
-npm install @types/wegame-api
+**npm install @types/wegame-api**
 
 欢迎PR纠错
 
