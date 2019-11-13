@@ -1,7 +1,8 @@
-// Type definitions for non-npm package wegame 2.6
+// Type definitions for non-npm package wegame 2.7
 // Project: https://developers.weixin.qq.com/minigame/dev/index.html
 // Definitions by: J.C <https://github.com/jcyuan>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// TypeScript Version: 3.0
 
 /**
  * IOS及安卓不支持：
@@ -113,13 +114,13 @@ declare class LogManager {
      * @param args 要记录的日志内容
      */
     info(... args: unknown[]): void;
-    
+
     /**
      * 写log日志
      * @param args 要记录的日志内容
      */
     log(... args: unknown[]): void;
-    
+
     /**
      * 写warn日志
      * @param args 要记录的日志内容
@@ -377,13 +378,13 @@ declare class UDPSocket {
 
     /**
      * 向指定的 IP 和 port 发送消息
-     * @param Object 
-     * @param object 
      */
     send(param: wx.types.UDPSendParams): void;
 
     /**
-     * 关闭 UDP Socket 实例，相当于销毁。 在关闭之后，UDP Socket 实例不能再发送消息，每次调用 UDPSocket.send 将会触发错误事件，并且 message 事件回调函数也不会再执行。在 UDPSocket 实例被创建后将被 Native 强引用，保证其不被 GC。在 UDPSocket.close 后将解除对其的强引用，让 UDPSocket 实例遵从 GC。
+     * 关闭 UDP Socket 实例，相当于销毁。 在关闭之后，UDP Socket 实例不能再发送消息，每次调用 UDPSocket.send 将会触发错误事件，
+     * 并且 message 事件回调函数也不会再执行。在 UDPSocket 实例被创建后将被 Native 强引用，保证其不被 GC。在 UDPSocket.close 后
+     * 将解除对其的强引用，让 UDPSocket 实例遵从 GC。
      */
     close(): void;
 
@@ -1042,7 +1043,7 @@ declare class Camera {
      * 拍照，可指定质量，成功则返回图片
      * @param quality 图片质量
      */
-    async takePhoto(quality?: "high" | "normal" | "low"): Promise<{
+    takePhoto(quality?: "high" | "normal" | "low"): Promise<{
         /**
          * 临时图片路径
          */
@@ -1060,13 +1061,13 @@ declare class Camera {
     /**
      * 开始录像
      */
-    async startRecord(): Promise<void>;
+    startRecord(): Promise<void>;
 
     /**
      * 结束录像，成功则返回封面与视频
      * @param compressed 是否压缩录制视频
      */
-    async stopRecord(compressed: boolean): Promise<{
+    stopRecord(compressed: boolean): Promise<{
         /**
          * 临时视频路径
          */
@@ -1091,8 +1092,6 @@ declare class Camera {
 
     /**
      * 监听摄像头实时帧数据
-     * @param onCameraFrameCallback 
-     * @param callback 
      */
     onCameraFrame(callback: (res: {
         /**
@@ -1559,22 +1558,18 @@ declare namespace wx {
         // --iBeacon（TODO）
         /**
          * 停止搜索附近的 iBeacon 设备
-         * @param param 
          */
         function stopBeaconDiscovery(param: unknown): void;
         /**
          * 开始搜索附近的 iBeacon 设备
-         * @param param 
          */
         function startBeaconDiscovery(param: unknown): void;
         /**
          * 监听 iBeacon 设备更新事件，仅能注册一个监听
-         * @param callback 
          */
         function onBeaconUpdate(callback: unknown): void;
         /**
          * 监听 iBeacon 服务状态变化事件，仅能注册一个监听
-         * @param callback 
          */
         function onBeaconServiceChange(callback: unknown): void;
         /**
@@ -1583,7 +1578,6 @@ declare namespace wx {
         function offBeaconUpdate(callback: unknown): void;
         /**
          * 取消监听 iBeacon 服务状态变化事件
-         * @param callback 
          */
         function offBeaconServiceChange(callback: unknown): void;
         /**
@@ -1807,7 +1801,7 @@ declare namespace wx {
                  * message 的大小，单位：字节
                  */
                 size: number;
-            }
+            };
         }
 
         /**
@@ -2632,12 +2626,13 @@ declare namespace wx {
      *     title: '送你 10 个金币，赶快打开游戏看看吧', // 2.9.0 支持
      *     imageUrl: 'image/xxx' // 2.9.0 支持
      * });
-     * 
+     *
      * 赠送动作的校验：
      *     调用该接口需要上传 JSServer 函数 "checkInteractiveData"，该函数可用于执行赠送动作的校验逻辑，校验通过后返回结果表示本次赠送是否合法。只有 checkInteractiveData 返回了 {ret: true}，此次修改才会成功。
-     * 
+     *
      * 使用模板规则进行交互：
-     *     每次调用该接口会弹窗询问用户是否确认执行该操作，2.9.0 之后版本，需要在 game.json 中设置 modifyFriendInteractiveStorageTemplates 来定制交互的文案。 modifyFriendInteractiveStorageTemplates 是一个模板数组，每一个模板需要有 key, action, object 参数，还有一个可选参数 ratio，详细说明见示例配置：
+     *     每次调用该接口会弹窗询问用户是否确认执行该操作，2.9.0 之后版本，需要在 game.json 中设置 modifyFriendInteractiveStorageTemplates 来定制交互的文案。
+     *     modifyFriendInteractiveStorageTemplates是一个模板数组，每一个模板需要有 key, action, object 参数，还有一个可选参数 ratio，详细说明见示例配置：
      *         {
      *             "modifyFriendInteractiveStorageTemplates": [
      *                  {
@@ -2649,7 +2644,7 @@ declare namespace wx {
      *              ]
      *          }
      *     最后生成的文案为 "确认 ${action} ${nickname} ${object}？"，或者 "确认 ${action} ${nickname} ${object} x ${opNum * ratio}？"
-     * 
+     *
      * 使用自定义文案进行交互：
      *     2.7.7 之后，2.9.0 之前的版本，文案通过 game.json 的 modifyFriendInteractiveStorageConfirmWording 字段配置。 配置内容可包含 nickname 变量，用 ${nickname} 表示，实际调用时会被替换成好友的昵称。示例配置：
      *         {
@@ -2700,10 +2695,10 @@ declare namespace wx {
             /**
              * 错误码
              *     -17006	非好友关系
-             *     -17007	非法的 toUser openId	
-             *     -17008	非法的 key	
-             *     -17009	非法的 operation	
-             *     -17010	非法的操作数	
+             *     -17007	非法的 toUser openId
+             *     -17008	非法的 key
+             *     -17009	非法的 operation
+             *     -17010	非法的操作数
              *     -17011	JSServer 校验写操作失败
              */
             errCode: number
@@ -2712,15 +2707,13 @@ declare namespace wx {
     }): void;
     /**
      * 获取当前用户互动型托管数据对应 key 的数据
-     * @param Object 
-     * @param object 
      */
     function getUserInteractiveStorage(param: {
         /**
          * 要获取的 key 列表
          */
         keyList: string[]
-    } & wx.types.CallbacksWithType2<{
+    } & types.CallbacksWithType2<{
         /**
          * 加密数据，包含互动型托管数据的值。解密后的结果为一个 KVDataList，每一项为一个 KVData。 用户数据的签名验证和加解密
          */
@@ -2728,7 +2721,7 @@ declare namespace wx {
         /**
          * 敏感数据对应的云 ID，开通云开发的小程序才会返回，可通过云调用直接获取开放数据，详细见云调用直接获取开放数据
          */
-        cloudID:string
+        cloudID: string
     }, {
         /**
          * 错误信息
@@ -2743,7 +2736,7 @@ declare namespace wx {
     /**
      * 获取可能对游戏感兴趣的未注册的好友名单。每次调用最多可获得 5 个好友，此接口只能在开放数据域中使用
      */
-    function getPotentialFriendList(callback: wx.types.CallbacksWithType<{
+    function getPotentialFriendList(callback: types.CallbacksWithType<{
         /**
          * 可能对游戏感兴趣的未注册好友名单
          */
@@ -2808,7 +2801,9 @@ declare namespace wx {
          */
         appId: string,
         /**
-         * 打开的页面路径，如果为空则打开首页。path 中 ? 后面的部分会成为 query，在小程序的 App.onLaunch、App.onShow 和 Page.onLoad 的回调函数或小游戏的 wx.onShow 回调函数、wx.getLaunchOptionsSync 中可以获取到 query 数据。对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"。
+         * 打开的页面路径，如果为空则打开首页。path 中 ? 后面的部分会成为 query，在小程序的 App.onLaunch、App.onShow
+         * 和 Page.onLoad 的回调函数或小游戏的 wx.onShow 回调函数、wx.getLaunchOptionsSync 中可以获取到 query 数据。
+         * 对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"。
          */
         path?: string,
         /**
@@ -2817,12 +2812,12 @@ declare namespace wx {
         extraData?: unknown,
         /**
          * 要打开的小程序版本。仅在当前小程序为开发版或体验版时此参数有效。如果当前小程序是正式版，则打开的小程序必定是正式版。默认值release
-         * develop	开发版	
-         * trial	体验版	
+         * develop	开发版
+         * trial	体验版
          * release	正式版
          */
         envVersion?: "develop" | "trial" | "release"
-    } & wx.types.Callbacks): void;
+    } & types.Callbacks): void;
 
     // --用户信息
     function createUserInfoButton(param: {
@@ -2914,7 +2909,7 @@ declare namespace wx {
              */
             code: string
         }>
-    } & wx.types.CallbacksWithType<unknown>): void;  // TODO: success回调里的res的结构官方文档没写
+    } & types.CallbacksWithType<unknown>): void;  // TODO: success回调里的res的结构官方文档没写
     /**
      * 批量添加卡券。只有通过 认证 的小程序或文化互动类目的小游戏才能使用。更多文档请参考 微信卡券接口文档（https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=1490190158&version=1&lang=zh_CN&platform=2）。
      */
@@ -2932,7 +2927,7 @@ declare namespace wx {
              */
             cardExt: string
         }>
-    } & wx.types.CallbacksWithType<{
+    } & types.CallbacksWithType<{
         /**
          * 卡券添加结果列表
          */
@@ -3117,7 +3112,8 @@ declare namespace wx {
          */
         imageUrl?: string
         /**
-         * 审核通过的图片 ID，详见 使用审核通过的转发图片（https://developers.weixin.qq.com/minigame/dev/guide/open-ability/share/share.html#%E4%BD%BF%E7%94%A8%E5%AE%A1%E6%A0%B8%E9%80%9A%E8%BF%87%E7%9A%84%E8%BD%AC%E5%8F%91%E5%9B%BE%E7%89%87）
+         * 审核通过的图片 ID，详见 使用审核通过的转发图片（https://developers.weixin.qq.com/minigame/dev/guide/open-ability/sh
+         * are/share.html#%E4%BD%BF%E7%94%A8%E5%AE%A1%E6%A0%B8%E9%80%9A%E8%BF%87%E7%9A%84%E8%BD%AC%E5%8F%91%E5%9B%BE%E7%89%87）
          */
         imageUrlId?: string
     }): void;
@@ -3175,7 +3171,7 @@ declare namespace wx {
          * 默认值是 0
          */
         level?: 0 | 1
-    }): LogManager
+    }): LogManager;
 
     // --数据上报
     /**
@@ -3192,27 +3188,29 @@ declare namespace wx {
      */
     function requestSubscribeMessage(param: {
         /**
-         * 需要订阅的消息模板的id的集合（注意：iOS客户端7.0.6版本、Android客户端7.0.7版本之后的一次订阅才支持多个模板消息，iOS客户端7.0.5版本、Android客户端7.0.6版本之前的一次订阅只支持一个模板消息）消息模板id在[微信公众平台(mp.weixin.qq.com)-功能-订阅消息]中配置
+         * 需要订阅的消息模板的id的集合（注意：iOS客户端7.0.6版本、Android客户端7.0.7版本之后的一次订阅才支持多个模板消息，iOS客户端7.0.5版本、Android客户端7.0.6版本之前的一次订阅
+         * 只支持一个模板消息）消息模板id在[微信公众平台(mp.weixin.qq.com)-功能-订阅消息]中配置
          */
-        tmplIds: ReadonlyArray<string>
-    } & wx.types.CallbacksWithType2<{
+        tmplIds: ReadonlyArray<string>;
+    } & types.CallbacksWithType2<{
         /**
          * 接口调用成功时errMsg值为'requestSubscribeMessage:ok'
          */
-        errMsg: string,
+        errMsg: string;
         /**
-         * [TEMPLATE_ID]是动态的键，即模板id，值包括'accept'、'reject'、'ban'。'accept'表示用户同意订阅该条id对应的模板消息，'reject'表示用户拒绝订阅该条id对应的模板消息，'ban'表示已被后台封禁。例如 { errMsg: "requestSubscribeMessage:ok", zun-LzcQyW-edafCVvzPkK4de2Rllr1fFpw2A_x0oXE: "accept"} 表示用户同意订阅zun-LzcQyW-edafCVvzPkK4de2Rllr1fFpw2A_x0oXE这条消息
+         * [TEMPLATE_ID]是动态的键，即模板id，值包括'accept'、'reject'、'ban'。'accept'表示用户同意订阅该条id对应的模板消息，'reject'表示用户拒绝订阅该条id对应的模板消息，'ban'表示
+         * 已被后台封禁。例如 { errMsg: "requestSubscribeMessage:ok", zun-LzcQyW-edafCVvzPkK4de2Rllr1fFpw2A_x0oXE: "accept"} 表示用户同意订阅zun-LzcQyW-edafCVvzPkK4de2Rllr1fFpw2A_x0oXE这条消息
          */
-        [TEMPLATE_ID: string]: 'accept' | 'reject' | 'ban'
+        [TEMPLATE_ID: string]: 'accept' | 'reject' | 'ban' | string;
     }, {
         /**
          * 接口调用失败错误信息
          */
-        errMsg: string,
+        errMsg: string;
         /**
          * 接口调用失败错误码
          */
-        errCode: number
+        errCode: number;
     }>): void;
 
     // --数据缓存
@@ -3646,7 +3644,7 @@ declare namespace wx {
      * 创建相机
      * @param param 创建相机所需的初始化信息
      */
-    function createCamera(param?: wx.types.Callbacks & {
+    function createCamera(param?: types.Callbacks & {
         /**
          * 相机的左上角横坐标，默认值0
          */
@@ -3682,7 +3680,7 @@ declare namespace wx {
      * 更新实时语音静音设置
      * @param param 静音设置
      */
-    function updateVoIPChatMuteConfig(param: wx.types.Callbacks & {
+    function updateVoIPChatMuteConfig(param: types.Callbacks & {
         /**
          * 静音设置
          */
@@ -3765,13 +3763,13 @@ declare namespace wx {
     /**
      * 加入 (创建) 实时语音通话，更多信息可见：实时语音指南（https://developers.weixin.qq.com/minigame/dev/guide/open-ability/voip-chat.html）
      * 错误码
-     *    -1    当前已在房间内	
-     *    -2    录音设备被占用，可能是当前正在使用微信内语音通话或系统通话	
-     *    -3    加入会话期间退出（可能是用户主动退出，或者退后台、来电等原因），因此加入失败	
+     *    -1    当前已在房间内
+     *    -2    录音设备被占用，可能是当前正在使用微信内语音通话或系统通话
+     *    -3    加入会话期间退出（可能是用户主动退出，或者退后台、来电等原因），因此加入失败
      *    -1000 系统错误
      * @param param 加入语音聊天时的初始化参数
      */
-    function joinVoIPChat(param: wx.types.CallbacksWithType<{
+    function joinVoIPChat(param: types.CallbacksWithType<{
         /**
          * 在此通话中的成员 openId 名单
          */
@@ -3818,7 +3816,7 @@ declare namespace wx {
     /**
      * 退出（销毁）实时语音通话
      */
-    function exitVoIPChat(callbacks?: wx.types.Callbacks): void;
+    function exitVoIPChat(callbacks?: types.Callbacks): void;
 
     // --广告
     /**
