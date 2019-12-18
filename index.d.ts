@@ -210,7 +210,8 @@ declare class FileSystemManager {
      * @throws 指定的 filePath 所在目录不存在
      * @throws 指定的 filePath 路径没有读权限
      */
-    readFileSync(filePath: string, encoding?: wx.types.FileContentEncoding): string | ArrayBuffer;
+    readFileSync(filePath: string): ArrayBuffer;
+    readFileSync(filePath: string, encoding: wx.types.FileContentEncoding): string;
 
     /**
      * 获取文件 Stats 对象
@@ -236,7 +237,8 @@ declare class FileSystemManager {
      * @throws 指定的 filePath 所在目录不存在
      * @throws 指定的 filePath 路径没有写权限
      */
-    writeFileSync(filePath: string, data: string | ArrayBuffer, encoding?: wx.types.FileContentEncoding): void;
+    writeFileSync(filePath: string, data: ArrayBuffer): void;
+    writeFileSync(filePath: string, data: string, encoding: wx.types.FileContentEncoding): void;
 
     /**
      * 判断文件/目录是否存在
